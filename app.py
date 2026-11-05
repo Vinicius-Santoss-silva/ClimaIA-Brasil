@@ -104,6 +104,79 @@ div[data-testid="stFormSubmitButton"] button:hover {
     color: white;
 }
 
+
+/* Tabelas responsivas: cartões no celular, tabelas no computador */
+.climaia-mobile-cards {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .st-key-climaia-desktop-previsao,
+    .st-key-climaia-desktop-ia {
+        display: none !important;
+    }
+
+    .climaia-mobile-cards {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 4px 0 18px;
+    }
+
+    .climaia-mobile-card {
+        background: #FFFFFF;
+        border: 1px solid #DCE8F5;
+        border-radius: 12px;
+        padding: 14px;
+        box-shadow: 0 2px 8px rgba(18, 52, 90, 0.04);
+        color: #12345A;
+    }
+
+    .climaia-card-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 12px;
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .climaia-card-tag {
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #EAF3FC;
+        color: #12345A;
+    }
+
+    .climaia-card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .climaia-card-cell {
+        min-width: 0;
+    }
+
+    .climaia-card-label {
+        color: #536B83;
+        font-size: 0.75rem;
+        line-height: 1.3;
+    }
+
+    .climaia-card-value {
+        color: #12345A;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-top: 3px;
+        overflow-wrap: anywhere;
+    }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -131,6 +204,60 @@ st.write(
     "Pesquise sua cidade e consulte as temperaturas "
     "previstas para os próximos 7 dias."
 )
+
+
+# Mostrar tabela completa no computador e cartões legíveis no celular.
+# O CSS oculta a versão que não corresponde ao tamanho da tela.
+def mostrar_tabela_responsiva(dados_tabela, tipo):
+    from html import escape
+
+    with st.container(key=f"climaia-desktop-{tipo}"):
+        st.dataframe(dados_tabela, hide_index=True, use_container_width=True)
+
+    def formato_numero(valor, unidade=""):
+        return f"{float(valor):.1f}".replace(".", ",") + unidade
+
+    def celula(rotulo, valor):
+        return (
+            '<div class="climaia-card-cell">'
+            f'<div class="climaia-card-label">{escape(rotulo)}</div>'
+            f'<div class="climaia-card-value">{escape(str(valor))}</div>'
+            '</div>'
+        )
+
+    cartoes = []
+    for _, linha in dados_tabela.iterrows():
+        if tipo == "previsao":
+            data = pd.to_datetime(linha["Data"]).strftime("%d/%m/%Y")
+            nivel = str(linha["Nível de calor"])
+            conteudo = (
+                celula("Máxima", formato_numero(linha["Máxima (°C)"], " °C"))
+                + celula("Mínima", formato_numero(linha["Mínima (°C)"], " °C"))
+                + celula("Chuva", formato_numero(linha["Chuva (mm)"], " mm"))
+            )
+            marcador = nivel
+        elif tipo == "ia":
+            data = str(linha["Data"])
+            marcador = str(linha["Classificação da IA"])
+            conteudo = (
+                celula("Máxima observada", formato_numero(linha["Máxima observada (°C)"], " °C"))
+                + celula("Pontuação da IA", formato_numero(linha["Pontuação da IA (%)"], "%"))
+            )
+        else:
+            raise ValueError("Tipo de tabela desconhecido")
+
+        cartoes.append(
+            '<div class="climaia-mobile-card">'
+            '<div class="climaia-card-head">'
+            f'<span>📅 {escape(data)}</span>'
+            f'<span class="climaia-card-tag">{escape(marcador)}</span>'
+            '</div>'
+            f'<div class="climaia-card-grid">{conteudo}</div>'
+            '</div>'
+        )
+
+    st.html('<div class="climaia-mobile-cards">' + ''.join(cartoes) + '</div>')
+
 
 # Guardar consultas por 1 hora para reduzir
 # solicitações repetidas à API.
@@ -247,7 +374,7 @@ if st.session_state.get("cidade_pesquisada"):
                 )
 
                 st.subheader("📊 Previsão dos próximos 7 dias")
-                st.dataframe(tabela, hide_index=True)
+                mostrar_tabela_responsiva(tabela, "previsao")
 
                 # ETAPA 34 - ALERTAS DE CALOR
                 st.subheader("🚨 Monitoramento de calor")
@@ -403,7 +530,7 @@ if all(p.exists() for p in [
 
         st.success("Modelo Random Forest carregado!")
         st.write("Exemplos históricos de 2025:")
-        st.dataframe(resultado_ia, hide_index=True)
+        mostrar_tabela_responsiva(resultado_ia, "ia")
 
         st.caption(
             "Pontuações não calibradas. "
