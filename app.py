@@ -15,6 +15,39 @@ st.set_page_config(
 st.markdown("""
 <style>
 
+/* AJUSTES PARA CELULAR */
+@media (max-width: 640px) {
+
+    /* Margens da página */
+    .block-container {
+        padding: 1rem !important;
+    }
+
+    /* Títulos menores */
+    h1, h2, h3 {
+        font-size: 1.35rem !important;
+        line-height: 1.3 !important;
+        overflow-wrap: anywhere;
+    }
+
+    /* Cartões mais compactos */
+    div[data-testid="stMetric"] {
+        padding: 12px 16px !important;
+        border-radius: 12px !important;
+    }
+
+    /* Números dos indicadores */
+    div[data-testid="stMetricValue"] {
+        font-size: 1.6rem !important;
+    }
+
+    /* Textos dos indicadores */
+    div[data-testid="stMetricLabel"] {
+        font-size: 0.85rem !important;
+    }
+
+}
+
 /* Fundo principal */
 .stApp {
     background: linear-gradient(
