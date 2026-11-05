@@ -15,168 +15,168 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-
-/* AJUSTES PARA CELULAR */
-@media (max-width: 640px) {
-
-    /* Margens da página */
-    .block-container {
-        padding: 1rem !important;
-    }
-
-    /* Títulos menores */
-    h1, h2, h3 {
-        font-size: 1.35rem !important;
-        line-height: 1.3 !important;
-        overflow-wrap: anywhere;
-    }
-
-    /* Cartões mais compactos */
-    div[data-testid="stMetric"] {
-        padding: 12px 16px !important;
-        border-radius: 12px !important;
-    }
-
-    /* Números dos indicadores */
-    div[data-testid="stMetricValue"] {
-        font-size: 1.6rem !important;
-    }
-
-    /* Textos dos indicadores */
-    div[data-testid="stMetricLabel"] {
-        font-size: 0.85rem !important;
-    }
-
-}
-
-/* Fundo principal */
-.stApp {
-    background: linear-gradient(
-        135deg, #F0F7FF, #FFFFFF
-    );
-}
-
-/* Área principal */
+/* ClimaIA Brasil — identidade visual unificada e responsiva */
+:root { color-scheme: light; }
+.stApp { background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%); }
 .block-container {
     max-width: 1100px;
-    padding-top: 2rem;
-    padding-bottom: 3rem;
+    padding-top: 1.4rem;
+    padding-bottom: 2rem;
 }
-
-/* Títulos */
 h1, h2, h3 {
     color: #12345A;
     font-family: Arial, sans-serif;
+    overflow-wrap: anywhere;
 }
-
-h1 {
+.climaia-hero {
+    background: linear-gradient(120deg, #123B73, #1675C5);
+    border-radius: 18px;
+    padding: 25px 29px;
+    color: #FFFFFF;
+    margin-bottom: 18px;
+}
+.climaia-hero-eyebrow {
+    font-size: .76rem;
+    letter-spacing: .09em;
+    color: #D8EAFF;
+    font-weight: 600;
+}
+.climaia-hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.45rem);
+    line-height: 1.18;
+    margin: 11px 0;
     font-weight: 800;
+    color: #FFFFFF;
+    overflow-wrap: anywhere;
 }
+.climaia-hero-subtitle { color: #E2F1FF; font-size: .98rem; line-height: 1.5; }
 
-/* Indicadores */
 div[data-testid="stMetric"] {
     background-color: #FFFFFF;
-    padding: 20px;
+    padding: 18px;
     border-radius: 14px;
     border: 1px solid #DCE8F5;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }
-
-/* Área de pesquisa */
 div[data-testid="stForm"] {
     background: #FFFFFF;
     border: 1px solid #DCE8F5;
     border-radius: 14px;
-    padding: 20px;
+    padding: 15px;
 }
-
-/* Botão de consulta */
 div[data-testid="stFormSubmitButton"] button {
     background-color: #1769C2;
-    color: white;
+    color: #FFFFFF;
     border-radius: 10px;
     border: none;
-    font-weight: bold;
+    font-weight: 700;
 }
+div[data-testid="stFormSubmitButton"] button:hover { background-color: #0B4C91; color: #FFFFFF; }
 
-div[data-testid="stFormSubmitButton"] button:hover {
-    background-color: #0B4C91;
-    color: white;
-}
+/* Desktop mostra tabelas e indicadores nativos do Streamlit. */
+.climaia-mobile-cards, .climaia-mobile-kpis { display: none; }
 
-
-/* Tabelas responsivas: cartões no celular, tabelas no computador */
-.climaia-mobile-cards {
-    display: none;
-}
-
+/* Layout compacto para smartphones. */
 @media (max-width: 640px) {
-    .st-key-climaia-desktop-previsao,
-    .st-key-climaia-desktop-ia {
-        display: none !important;
+    .block-container { padding: .65rem .8rem 2rem !important; }
+    h1, h2, h3 {
+        font-size: 1.23rem !important;
+        line-height: 1.35 !important;
+        overflow-wrap: anywhere;
     }
+    .climaia-hero { padding: 19px 17px; border-radius: 14px; margin-bottom: 14px; }
+    .climaia-hero-title { font-size: 1.9rem !important; }
+    .climaia-hero-subtitle { font-size: .88rem; }
+    .climaia-hero-eyebrow { font-size: .67rem; }
+    div[data-testid="stForm"] { padding: 10px; }
+
+    /* Não reservar espaço para as versões desktop. */
+    .st-key-climaia-desktop-previsao,
+    .st-key-climaia-desktop-ia,
+    .st-key-climaia-kpis-desktop { display: none !important; }
 
     .climaia-mobile-cards {
         display: grid !important;
         grid-template-columns: 1fr;
-        gap: 10px;
-        margin: 4px 0 18px;
+        gap: 9px;
+        margin: 0 0 12px;
     }
-
     .climaia-mobile-card {
         background: #FFFFFF;
         border: 1px solid #DCE8F5;
         border-radius: 12px;
-        padding: 14px;
+        padding: 10px 12px;
         box-shadow: 0 2px 8px rgba(18, 52, 90, 0.04);
         color: #12345A;
     }
-
     .climaia-card-head {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 12px;
+        gap: 6px;
+        margin-bottom: 9px;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: .85rem;
     }
-
+    .climaia-card-date { color: #12345A; font-variant-numeric: tabular-nums; }
     .climaia-card-tag {
-        font-size: 0.78rem;
+        font-size: .72rem;
         font-weight: 700;
         padding: 4px 8px;
         border-radius: 999px;
         background: #EAF3FC;
         color: #12345A;
     }
-
     .climaia-card-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 5px;
     }
-
-    .climaia-card-cell {
-        min-width: 0;
-    }
-
+    .climaia-card-grid-ia { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .climaia-card-cell { min-width: 0; }
     .climaia-card-label {
         color: #536B83;
-        font-size: 0.75rem;
+        font-size: .7rem;
         line-height: 1.3;
     }
-
     .climaia-card-value {
         color: #12345A;
-        font-size: 1.05rem;
+        font-size: .95rem;
         font-weight: 700;
         margin-top: 3px;
         overflow-wrap: anywhere;
+        font-variant-numeric: tabular-nums;
+    }
+    .climaia-mobile-kpis {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        margin: 4px 0 13px;
+    }
+    .climaia-kpi {
+        background: #FFFFFF;
+        border: 1px solid #DCE8F5;
+        border-radius: 12px;
+        padding: 11px 8px;
+        text-align: center;
+        min-width: 0;
+    }
+    .climaia-kpi-label {
+        font-size: .7rem;
+        color: #536B83;
+        line-height: 1.2;
+        min-height: 2.4em;
+    }
+    .climaia-kpi-value {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #12345A;
+        line-height: 1.3;
+        margin-top: 4px;
+        font-variant-numeric: tabular-nums;
     }
 }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -184,18 +184,11 @@ div[data-testid="stFormSubmitButton"] button:hover {
 
 # ETAPA 40 - CABECALHO CORRIGIDO
 st.html("""
-<div style="background:linear-gradient(120deg,#123B73,#1675C5);
-border-radius:18px;padding:32px;color:white;margin-bottom:24px;">
-<div style="font-size:13px;color:#CDE9FF;">
-PLATAFORMA METEOROLÓGICA EXPERIMENTAL
-</div>
-<div style="font-size:38px;font-weight:800;color:white;">
-🌤️ ClimaIA Brasil
-</div>
-<div style="font-size:16px;color:#E2F1FF;margin-top:10px;">
-Dados meteorológicos e monitoramento de calor no Brasil.
-</div>
-</div>
+<section class="climaia-hero">
+    <div class="climaia-hero-eyebrow">PLATAFORMA METEOROLÓGICA EXPERIMENTAL</div>
+    <div class="climaia-hero-title">🌤️ ClimaIA Brasil</div>
+    <div class="climaia-hero-subtitle">Dados meteorológicos e monitoramento de calor no Brasil.</div>
+</section>
 """)
 
 st.subheader("Previsão Meteorológica e Análise de Calor")
@@ -212,7 +205,7 @@ def mostrar_tabela_responsiva(dados_tabela, tipo):
     from html import escape
 
     with st.container(key=f"climaia-desktop-{tipo}"):
-        st.dataframe(dados_tabela, hide_index=True, use_container_width=True)
+        st.dataframe(dados_tabela, hide_index=True, width="stretch")
 
     def formato_numero(valor, unidade=""):
         return f"{float(valor):.1f}".replace(".", ",") + unidade
@@ -249,10 +242,10 @@ def mostrar_tabela_responsiva(dados_tabela, tipo):
         cartoes.append(
             '<div class="climaia-mobile-card">'
             '<div class="climaia-card-head">'
-            f'<span>📅 {escape(data)}</span>'
+            f'<span class="climaia-card-date">{escape(data)}</span>'
             f'<span class="climaia-card-tag">{escape(marcador)}</span>'
             '</div>'
-            f'<div class="climaia-card-grid">{conteudo}</div>'
+            f'<div class="climaia-card-grid{(" climaia-card-grid-ia" if tipo == "ia" else "")}">{conteudo}</div>'
             '</div>'
         )
 
@@ -268,7 +261,7 @@ def buscar_cidade(nome):
     resposta = requests.get(
         url,
         params={
-            "name": nome,
+            "name": nome.split(",", 1)[0].strip(),
             "count": 10,
             "language": "pt",
             "countryCode": "BR"
@@ -308,7 +301,7 @@ def consultar_previsao(latitude, longitude):
 with st.form("pesquisa"):
     cidade = st.text_input(
         "📍 Digite sua cidade:",
-        placeholder="Exemplo: Cataguases, MG"
+        placeholder="Ex.: Cataguases"
     )
 
     consultar = st.form_submit_button(
@@ -388,11 +381,30 @@ if st.session_state.get("cidade_pesquisada"):
                     tabela["Máxima (°C)"] >= 35
                 ).sum()
 
-                c1, c2, c3 = st.columns(3)
+                with st.container(key="climaia-kpis-desktop"):
+                    c1, c2, c3 = st.columns(3)
+                    c1.metric("Maior máxima", f"{maxima:.1f} °C")
+                    c2.metric("Dias de atenção", int(dias_atencao))
+                    c3.metric("Dias em alerta", int(dias_alerta))
 
-                c1.metric("Maior máxima", f"{maxima:.1f} °C")
-                c2.metric("Dias de atenção", int(dias_atencao))
-                c3.metric("Dias em alerta", int(dias_alerta))
+                # Mesmos indicadores em formato compacto apenas no celular.
+                maxima_texto = f"{maxima:.1f}".replace(".", ",")
+                st.html(f"""
+                <div class="climaia-mobile-kpis">
+                    <div class="climaia-kpi">
+                        <div class="climaia-kpi-label">Maior máxima</div>
+                        <div class="climaia-kpi-value">{maxima_texto}°C</div>
+                    </div>
+                    <div class="climaia-kpi">
+                        <div class="climaia-kpi-label">Dias de atenção</div>
+                        <div class="climaia-kpi-value">{int(dias_atencao)}</div>
+                    </div>
+                    <div class="climaia-kpi">
+                        <div class="climaia-kpi-label">Dias em alerta</div>
+                        <div class="climaia-kpi-value">{int(dias_alerta)}</div>
+                    </div>
+                </div>
+                """)
 
                 if dias_alerta > 0:
                     st.error("Alerta experimental de calor elevado.")
@@ -402,7 +414,9 @@ if st.session_state.get("cidade_pesquisada"):
                     st.success("Temperaturas abaixo de 30 °C.")
 
                 st.caption(
-                    "Limites experimentais, não alertas oficiais."
+                    "Classificação experimental por temperatura máxima: "
+                    "30–34,9 °C (atenção) e 35 °C ou mais (alerta). "
+                    "Não substitui alertas oficiais."
                 )
 
                 st.subheader("🌡️ Gráfico de temperaturas")
@@ -426,7 +440,11 @@ if st.session_state.get("cidade_pesquisada"):
                     )
                     .properties(height=280)
                 )
-                st.altair_chart(grafico, use_container_width=True)
+                st.altair_chart(
+                    grafico,
+                    width="stretch",
+                    alt="Temperaturas máxima e mínima previstas para os próximos sete dias",
+                )
 
         except requests.exceptions.HTTPError as erro:
             if erro.response.status_code == 429:
@@ -442,9 +460,7 @@ if st.session_state.get("cidade_pesquisada"):
 
 st.divider()
 
-
 # ETAPA 45 - IA HISTORICA
-st.divider()
 st.subheader("🤖 Inteligência Artificial - ClimaIA")
 
 st.info(
@@ -512,6 +528,7 @@ if all(p.exists() for p in [
     ].tail(7).copy()
 
     if not exemplos.empty:
+        limite_ia = float(config.get("limite_random_forest", 0.6))
         pontuacoes = modelo.predict_proba(
             exemplos[colunas]
         )[:, 1]
@@ -523,7 +540,7 @@ if all(p.exists() for p in [
                 pontuacoes * 100, 1
             ),
             "Classificação da IA": [
-                "Alerta" if p >= 0.6 else "Normal"
+                "Alerta" if p >= limite_ia else "Normal"
                 for p in pontuacoes
             ]
         })
@@ -533,9 +550,10 @@ if all(p.exists() for p in [
         mostrar_tabela_responsiva(resultado_ia, "ia")
 
         st.caption(
-            "Pontuações não calibradas. "
-            "O modelo ainda não é um sistema oficial "
-            "de alerta e precisa de validação adicional."
+            "Exemplos de 2025, não previsões futuras. "
+            "Pontuações não calibradas; o Random Forest precisa de "
+            "avaliação temporal antes de ser usado para decisões. "
+            "Este projeto não emite alertas oficiais."
         )
 
 else:
