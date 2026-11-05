@@ -1,0 +1,27 @@
+{
+    "cidade_modelo": "Cataguases - MG",
+    "limite_temperatura": 35,
+    "limite_logistico": 0.8,
+    "limite_random_forest": 0.6,
+    "variaveis_logistico": [
+        "temperature_2m_max",
+        "temperature_2m_min",
+        "precipitation_sum",
+        "relative_humidity_2m_mean",
+        "wind_speed_10m_max",
+        "mes_previsao"
+    ],
+    "variaveis_random_forest": [
+        "Temperatura_Maxima",
+        "Temperatura_Minima",
+        "Chuva_mm",
+        "Mes_seno",
+        "Mes_cosseno",
+        "Maxima_Ontem",
+        "Maxima_Anteontem",
+        "Media_Maxima_3_Dias",
+        "Amplitude_Termica",
+        "Chuva_3_Dias"
+    ],
+    "observacao": "Modelos experimentais"
+}
