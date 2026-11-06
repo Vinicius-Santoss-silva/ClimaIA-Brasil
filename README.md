@@ -1,78 +1,114 @@
+# 🌤️ ClimaIA Brasil
 
-🌤️ ClimaIA Brasil
-Aplicação meteorológica experimental que combina previsões de 7 dias e demonstração histórica de inteligência artificial para identificação de calor extremo. Projeto de portfólio em Ciência de Dados com Python, Streamlit e scikit-learn.
+**Aplicação meteorológica experimental que reúne previsão de 7 dias e demonstração histórica de aprendizado de máquina para estudo de calor extremo.**
 
-A previsão futura é fornecida pela API Open-Meteo. O modelo de IA na interface apresenta exemplos históricos de 2025 para Cataguases (MG), não previsões futuras produzidas pela IA nem alertas oficiais.
+[**🌐 Acessar aplicativo**](https://climaia-brasil.streamlit.app/) · [**📊 Relatório de validação**](RELATORIO_VALIDACAO_CLIMAIA.md) · [**🧪 Código do backtesting**](validar_climaia.py)
 
-Funcionalidades
-Busca de cidades brasileiras e consulta de previsão meteorológica para os próximos 7 dias.
-Temperaturas máximas, mínimas e precipitação previstas pela Open-Meteo.
-Classificação experimental baseada na máxima prevista: normal (<30 °C), atenção (30 a <35 °C), alerta (≥35 °C).
-Indicadores, gráfico de temperaturas e interface responsiva para celular e computador.
-Demonstração de um modelo Random Forest preexistente usando exemplos históricos de 2025 de Cataguases.
-Validação temporal reproduzível
-O script `validar_climaia.py` executa backtesting anual, treinando cada modelo apenas com anos anteriores ao ano avaliado. A base histórica contém 4.015 observações diárias de 03/01/2015 a 30/12/2025; após a engenharia de atributos e a definição do alvo, restam 4.012 exemplos elegíveis e 67 eventos de temperatura máxima ≥35 °C.
+> **Atenção:** a previsão para os próximos sete dias é fornecida pela API Open-Meteo. O modelo de IA exibido no aplicativo classifica **exemplos históricos de 2025 em Cataguases (MG)**; ele **não prevê o clima futuro** e **não emite alertas meteorológicos oficiais**.
 
-Métricas agregadas — 2020–2024
-O conjunto de avaliação contém 1.827 dias e 27 eventos (prevalência de aproximadamente 1,48%). PR-AUC abaixo corresponde à average precision calculada sobre todas as previsões anuais reunidas.
+## ✨ Funcionalidades
 
-Modelo	AP / PR-AUC	Precisão @ 0,5	Revocação @ 0,5	Falsos alertas
-Regressão Logística	0,3958	16,1%	88,9%	125
-Extra Trees	0,3494	32,2%	70,4%	40
-Random Forest	0,2864	26,7%	29,6%	22
-A Regressão Logística teve a maior AP, mas produziu mais falsos alertas no limiar ilustrativo de 0,5. Não há comprovação de adequação operacional.
+- Pesquisa de cidades brasileiras e seleção de município/estado.
+- Previsão de temperatura máxima, mínima e precipitação para sete dias, obtida da **Open-Meteo**.
+- Classificação **experimental** da temperatura máxima prevista: **normal** (abaixo de 30 °C), **atenção** (de 30 °C até menos de 35 °C) e **alerta** (35 °C ou mais).
+- Indicadores de dias de atenção/alerta e gráfico de temperaturas.
+- Layout responsivo para computadores e celulares.
+- Demonstração de um **Random Forest pré-existente**, aplicado a observações históricas de Cataguases.
 
-Avaliação posterior — 2025
-Foram avaliados 364 dias e 9 eventos. No limiar de 0,5, a Regressão Logística identificou 8 de 9 eventos, com 18 falsos positivos (precisão de 30,8% e revocação de 88,9%). O período não deve ser descrito como teste completamente intocado, pois seus dados já foram examinados durante o desenvolvimento.
+## 🧠 Experimento de ciência de dados
 
-Importante: um resultado experimental anterior indicava AP de aproximadamente 0,316 para Random Forest em 2020–2024. O script atual reproduz 0,2864 com seu próprio protocolo e hiperparâmetros; essas medições não devem ser confundidas. Além disso, a avaliação treina novos modelos e não valida automaticamente o arquivo modelo_random_forest.pkl usado no aplicativo.
+**Pergunta de pesquisa:** com as condições meteorológicas observadas até hoje, é possível identificar se **amanhã** terá temperatura máxima **≥ 35 °C**?
 
-Para todas as métricas, tabelas por ano, metodologia e limitações, leia o Relatório de validação temporal.
+A base histórica contém **4.015 registros diários** (03/01/2015 a 30/12/2025). Após a preparação de variáveis e definição do alvo, há **4.012 exemplos elegíveis** e **67 eventos** de calor extremo. O script [`validar_climaia.py`](validar_climaia.py) executa **backtesting temporal anual**: para cada ano avaliado, treina os modelos apenas com anos anteriores.
 
-Estrutura do repositório
-app.py
-requirements.txt
-validar_climaia.py
-RELATORIO_VALIDACAO_CLIMAIA.md
-README.md
-.streamlit/config.toml
-ClimaIA_Brasil/
-    config.json
-    historico_rf_cataguases.csv
-    modelo_random_forest.pkl
-Executar localmente
-Na pasta raiz do repositório, com Python instalado:
+### Avaliação agregada: 2020–2024
 
+Foram avaliados **1.827 dias**, incluindo **27 eventos** (prevalência de aproximadamente **1,48%**). A PR-AUC apresentada corresponde à *average precision* agregada calculada sobre as pontuações de todos os anos de teste reunidos.
+
+| Modelo | PR-AUC (AP) | Precisão @ 0,5 | Revocação @ 0,5 | Falsos alertas |
+|:--|--:|--:|--:|--:|
+| **Regressão Logística** | **0,3958** | 16,1% | **88,9%** | 125 |
+| Extra Trees | 0,3494 | **32,2%** | 70,4% | 40 |
+| Random Forest | 0,2864 | 26,7% | 29,6% | **22** |
+
+A **Regressão Logística** teve a maior PR-AUC agregada e a maior capacidade de detecção ao limiar ilustrativo de 0,5, mas também produziu mais falsos alertas. **Isso não comprova que seja adequada para decisões operacionais.**
+
+### Avaliação posterior: 2025
+
+Nos **364 dias** avaliados em 2025 ocorreram **9 eventos**. Com limiar de 0,5, a Regressão Logística detectou **8 de 9** eventos e produziu **18 falsos alertas** (precisão de **30,8%** e revocação de **88,9%**).
+
+> Os dados de 2025 já foram consultados durante o desenvolvimento; portanto, **não constituem um teste final completamente intocado**.
+
+Leia a metodologia, os resultados anuais e todas as limitações em [**RELATORIO_VALIDACAO_CLIMAIA.md**](RELATORIO_VALIDACAO_CLIMAIA.md).
+
+**Nota de consistência:** uma avaliação experimental anterior registrou PR-AUC de aproximadamente **0,316** para Random Forest em 2020–2024, enquanto o script publicado atualmente reproduz **0,2864** com seu próprio protocolo e hiperparâmetros. Esses resultados não devem ser confundidos. As métricas do backtesting referem-se a **novos modelos treinados pelo script**, não necessariamente ao arquivo `modelo_random_forest.pkl` carregado na interface.
+
+## 🛠️ Tecnologias
+
+**Python · pandas · NumPy · scikit-learn · Streamlit · Altair · Requests · Open-Meteo**
+
+## 📂 Estrutura do projeto
+
+```text
+ClimaIA-Brasil/
+├── app.py
+├── requirements.txt
+├── validar_climaia.py
+├── RELATORIO_VALIDACAO_CLIMAIA.md
+├── README.md
+├── .streamlit/
+│   └── config.toml
+└── ClimaIA_Brasil/
+    ├── config.json
+    ├── historico_rf_cataguases.csv
+    └── modelo_random_forest.pkl
+```
+
+## ▶️ Executar localmente
+
+Na raiz do repositório, com Python instalado:
+
+```bash
 python -m venv .venv
-Ative o ambiente no Windows:
+```
 
+Ative o ambiente virtual no Windows:
+
+```powershell
 .venv\Scripts\activate
+```
+
 Ou no Linux/macOS:
 
+```bash
 source .venv/bin/activate
-Depois, instale e execute:
+```
 
+Instale as dependências e execute o aplicativo:
+
+```bash
 pip install -r requirements.txt
 streamlit run app.py
-Para reproduzir o backtesting (gera resultado_validacao_anual.csv e previsoes_validacao.csv):
+```
 
+Para reproduzir o backtesting:
+
+```bash
 python validar_climaia.py
-A previsão meteorológica depende de conexão com a internet; os arquivos de ClimaIA_Brasil/ devem permanecer nos caminhos previstos.
+```
 
-Como funciona a demonstração histórica de IA
-O aplicativo carrega o arquivo modelo_random_forest.pkl com joblib e calcula variáveis derivadas de temperaturas, chuva, médias móveis e sazonalidade. A demonstração classifica exemplos históricos de temperatura máxima ≥35 °C no dia seguinte, mas não emite previsões futuras produzidas pela IA. As pontuações do modelo não foram calibradas como probabilidades confiáveis.
+O script cria `resultado_validacao_anual.csv` e `previsoes_validacao.csv`. A consulta da previsão depende de internet. Mantenha os arquivos da pasta `ClimaIA_Brasil/` nos caminhos originais.
 
-Limitações e próximos passos
-Os limiares de 30 °C e 35 °C são experimentais e não substituem avisos oficiais.
-A IA histórica foi desenvolvida para Cataguases, sem validação para generalização a outras cidades.
-Eventos extremos são raros; os resultados por ano variam bastante e exigem interpretação cuidadosa.
-O limiar 0,5 é ilustrativo. Uma futura seleção de limiares deve ocorrer sem consultar os dados de teste.
-Ainda falta documentar a proveniência original da base histórica e avaliar calibração, incerteza e desempenho em dados posteriores não consultados durante o desenvolvimento.
-Arquivos .pkl só devem ser carregados de fontes confiáveis. O modelo usado na interface não deve receber, sem auditoria adicional, as métricas de novos modelos treinados no backtesting.
-Falta testar a implantação pública em desktop e smartphone.
-Tecnologias
-Python · pandas · NumPy · scikit-learn · Streamlit · Altair · Requests · Open-Meteo
+## ⚠️ Limitações e próximos passos
 
-ClimaIA Brasil é um experimento de portfólio em Ciência de Dados, não um serviço oficial de previsão de riscos. Não usar isoladamente para decisões de saúde, segurança ou defesa civil.
+- Os limiares de 30 °C e 35 °C são **experimentais** e não substituem alertas oficiais.
+- A IA histórica foi estudada para **Cataguases (MG)**; o desempenho não pode ser generalizado para outras cidades.
+- O modelo exibido no aplicativo é um **Random Forest salvo anteriormente**, sem auditoria integral do seu treinamento original. O script de backtesting treina modelos novos e não valida automaticamente esse arquivo.
+- Pontuações da IA **não são probabilidades calibradas**; o limiar 0,5 é ilustrativo, não otimizado em validação independente.
+- A ocorrência de eventos extremos é rara, especialmente em alguns anos. Avaliações adicionais e novos dados não utilizados no desenvolvimento são necessários.
+- A **proveniência original** e eventuais transformações da base histórica ainda devem ser documentadas.
+- Arquivos de modelos serializados (`.pkl`) devem ser carregados apenas de fontes confiáveis.
 
-0
+---
+
+**ClimaIA Brasil é um projeto de portfólio e aprendizagem em Ciência de Dados. Não o utilize isoladamente para decisões de saúde, segurança ou defesa civil.**
